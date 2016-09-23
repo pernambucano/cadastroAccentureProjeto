@@ -7,7 +7,10 @@ $(function() {
 		$('.cpf').unmask();
 	});
 
-	// DatePicker
+	/*
+	 * DatePicker
+	 */
+
 	!function(a) {
 		a.fn.datepicker.dates["pt-BR"] = {
 			days : [ "Domingo", "Segunda", "Terça", "Quarta", "Quinta",
@@ -28,7 +31,6 @@ $(function() {
 	$('.date-picker').datepicker({
 		'format' : 'dd/mm/yyyy',
 		'language' : 'pt-BR',
-		'todayHighlight' : true,
-		'zIndexOffset': 10000
+		'todayHighlight' : true
 	});
 });

@@ -14,7 +14,7 @@
             <div class="form-group">
                 <p:outputLabel for="cpf" value="CPF: " class="col-md-2 control-label" />
                 <div class="col-md-4">
-                    <p:inputText id="cpf" value="" class="cpf" required="true" />
+                    <p:inputMask id="cpf" value="" required="true" size="20" mask="999.999.999-99" />
                 </div>
             </div> <!-- /.form-group -->
             
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <p:outputLabel for="nome" value="Nome: " class="col-md-2 control-label" />
                 <div class="col-md-4">
-                    <p:inputText id="nome" value="" class="" required="true" />
+                    <p:inputText id="nome" value="" required="true" size="40" />
                 </div>
             </div> <!-- /.form-group -->
             
@@ -39,32 +39,39 @@
             
             <!-- Data de Admissão -->
             <div class="form-group">
-                <!-- <p:outputLabel for="dataAdmissao" value="Data de Admissão: " class="col-md-2 control-label" /> -->
+                <p:outputLabel for="dataAdmissao" value="Data de Admissão: " class="col-md-2 control-label" />
                 <div class="col-md-2">
-                    <!-- <p:calendar id="dataAdmissao" value="#{professor.dataAdmissao}" /> -->
+                    <p:inputText id="dataAdmissao" value="" styleClass="date-picker" required="true" />
                 </div>
             </div> <!-- /.form-group -->
             
             <!-- Instituição -->
             <div class="form-group">
                 <p:outputLabel for="instituicao" value="Instituição: " class="col-md-2 control-label" />
-                <div class="col-md-4">
-                    <p:inputText id="instituicao" value="" class="" />
+                <div class="col-md-6">
+                    <p:autoComplete id="instituicao" dropdown="true" required="true" size="40" />
+                    <p:button icon="ui-icon-plus" title="Cadastrar instituição">
+                        <!--  -->
+                    </p:button>
                 </div>
             </div> <!-- /.form-group -->
             
             <!-- Titulação -->
             <div class="form-group">
                 <p:outputLabel for="titulacao" value="Titulação: " class="col-md-2 control-label" />
-                <div class="col-md-4">
-                    <p:inputText id="titulacao" value="" class="" />
+                <div class="col-md-6">
+                    <p:autoComplete id="titulacao" dropdown="true" required="true" size="20" />
+                    <p:button icon="ui-icon-plus" title="Cadastrar titulação">
+                        <!--  -->
+                    </p:button>
                 </div>
             </div> <!-- /.form-group -->
             
             <!-- Salvar -->
             <div class="form-group">
                 <div class="col-md-4 col-md-offset-2">
-                    <p:commandButton value="Salvar" />
+                    <h:commandButton value="Salvar" class="btn btn-primary" />
+                    <a href="index.xhtml" class="btn btn-default">Voltar</a>
                 </div>
             </div>
         </h:form>
