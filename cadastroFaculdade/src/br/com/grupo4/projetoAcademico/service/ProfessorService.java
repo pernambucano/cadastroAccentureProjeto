@@ -9,7 +9,7 @@ import br.com.grupo4.projetoAcademico.model.Telefone;
 public interface ProfessorService {
 	public void inserir(Professor professor);
 
-	public List<Professor> listar();
+	public List<Professor> getProfessores();
 
 	public Professor getProfessorById(int id);
 

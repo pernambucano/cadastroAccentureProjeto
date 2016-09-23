@@ -1,12 +1,10 @@
 package br.com.grupo4.projetoAcademico.main;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import br.com.grupo4.projetoAcademico.dao.EnderecoDAOImpl;
 import br.com.grupo4.projetoAcademico.dao.PessoaDAOImpl;
-import br.com.grupo4.projetoAcademico.dao.ProfessorDAO;
 import br.com.grupo4.projetoAcademico.dao.ProfessorDAOImpl;
 import br.com.grupo4.projetoAcademico.dao.TelefoneDAOImpl;
 import br.com.grupo4.projetoAcademico.dao.TitulacaoDAOImpl;
@@ -17,6 +15,8 @@ import br.com.grupo4.projetoAcademico.model.Professor;
 import br.com.grupo4.projetoAcademico.model.Sexo;
 import br.com.grupo4.projetoAcademico.model.Telefone;
 import br.com.grupo4.projetoAcademico.model.Titulacao;
+import br.com.grupo4.projetoAcademico.service.ProfessorService;
+import br.com.grupo4.projetoAcademico.service.ProfessorServiceImpl;
 
 public class Teste {
 
@@ -28,8 +28,17 @@ public class Teste {
 
 		Teste t = new Teste();
 		//		t.inserirPessoa();
-		t.inserirProfessor();
+//		t.inserirProfessor();
+		List<Professor> professores = t.getProfessores();
+		for (Professor professor : professores) {
+			System.out.println("ID: " + professor.getId());
+		}
 
+	}
+	
+	public List<Professor> getProfessores() {
+		ProfessorService service = new ProfessorServiceImpl();
+		return service.getProfessores();
 	}
 
 	public void inserirProfessor() {
