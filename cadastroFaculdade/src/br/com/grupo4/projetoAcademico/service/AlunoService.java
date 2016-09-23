@@ -10,7 +10,7 @@ public interface AlunoService {
 
 	public void inserir(Aluno aluno);
 
-	public List<Aluno> listar();
+	public List<Aluno> getAlunos();
 
 	public void atualizar(Aluno aluno);
 

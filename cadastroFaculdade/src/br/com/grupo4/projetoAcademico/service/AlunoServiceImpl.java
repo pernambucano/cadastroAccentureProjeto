@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import br.com.grupo4.projetoAcademico.dao.AlunoDAO;
+import br.com.grupo4.projetoAcademico.dao.AlunoDAOImpl;
 import br.com.grupo4.projetoAcademico.model.Aluno;
 import br.com.grupo4.projetoAcademico.model.Endereco;
 import br.com.grupo4.projetoAcademico.model.Telefone;
@@ -17,7 +18,7 @@ import br.com.grupo4.projetoAcademico.model.Telefone;
 @Transactional
 public class AlunoServiceImpl implements AlunoService {
 
-	private AlunoDAO alunDAO;
+	private AlunoDAO alunDAO = AlunoDAOImpl.getInstance();
 
 	public void setAlunDAO(AlunoDAO alunDAO) {
 		this.alunDAO = alunDAO;
@@ -30,7 +31,7 @@ public class AlunoServiceImpl implements AlunoService {
 	}
 
 	@Override
-	public List<Aluno> listar() {
+	public List<Aluno> getAlunos() {
 		return alunDAO.listar();
 	}
 
