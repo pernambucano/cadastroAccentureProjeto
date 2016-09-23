@@ -1,6 +1,6 @@
 ## Synopsis
 
-Este é um exercício da Academia Java Accenture. Sua função é permitir o aprendizado de tecnologias java web.
+Este Ã© um exercÃ­cio da Academia Java Accenture. Sua funÃ§Ã£o Ã© permitir o aprendizado de tecnologias java web.
 
 ## Requirements
 
@@ -24,11 +24,11 @@ Para iniciar o projeto escolha o arquivo WebContent >> professor >> cadastrar.xh
 
 ## Contributors
 
-### Paulo Fernandes
-### Bruna Carolina
-### Walber Nunes
-### Fagner Lima
-### Andrews Lima
+####  Paulo Fernandes
+####  Bruna Carolina
+####  Walber Nunes
+####  Fagner Lima
+####  Andrews Lima
 
 ## License
 
