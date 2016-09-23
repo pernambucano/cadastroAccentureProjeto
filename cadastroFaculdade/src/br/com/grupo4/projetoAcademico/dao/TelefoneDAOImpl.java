@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import br.com.grupo4.projetoAcademico.model.Publicacao;
 import br.com.grupo4.projetoAcademico.model.Telefone;
 import br.com.grupo4.projetoAcademico.util.HibernateUtil;
 
@@ -45,26 +46,50 @@ public class TelefoneDAOImpl implements TelefoneDAO {
 	@Override
 	@Transactional
 	public List<Telefone> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Telefone.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Telefone.class);
+			List<Telefone> lista =  criteria.list();
+			session.getTransaction().commit();
+			return lista;
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional
 	public void atualizar(Telefone telefone) {
-		sessionFactory.getCurrentSession().update(telefone);
-		
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			sessionFactory.getCurrentSession().update(telefone);
+			session.getTransaction().commit();
+		}
 	}
 
 	@Override
 	public void remover(int id) {
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
 		sessionFactory.getCurrentSession().delete(this.getTelefoneById(id));
+		session.getTransaction().commit();
+		}
 		
 	}
 
 	@Override
 	public Telefone getTelefoneById(int id) {
-		return (Telefone) sessionFactory.getCurrentSession().get(Telefone.class, id); 
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			Telefone result=  (Telefone) sessionFactory.getCurrentSession().get(Telefone.class, id);
+			session.getTransaction().commit();
+			return result;
+		}
+		return null;
 	}
 
 	

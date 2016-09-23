@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import br.com.grupo4.projetoAcademico.model.Aluno;
 import br.com.grupo4.projetoAcademico.model.Endereco;
 import br.com.grupo4.projetoAcademico.model.Pessoa;
+import br.com.grupo4.projetoAcademico.model.Professor;
 import br.com.grupo4.projetoAcademico.model.Telefone;
 import br.com.grupo4.projetoAcademico.util.HibernateUtil;
 
@@ -53,31 +54,17 @@ public class PessoaDAOImpl implements PessoaDAO {
 	@Override
 	@Transactional
 	public List<Pessoa> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de endereco");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class);
+			List<Pessoa> lista =  criteria.list();
+			return lista;
+		}
+		return null;
 	}
 
-//
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	@Transactional
-//	public List<Endereco> getEnderecos(int id) {
-//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class, "pessoa");
-//		criteria.createCriteria("endereco", "e");
-//		criteria.add(Restrictions.eq("e.pessoa_id", id));
-//		return criteria.list();
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	@Transactional
-//	public List<Telefone> getTelefones(int id) {
-//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class, "pessoa");
-//		criteria.createCriteria("telefone", "t");
-//		criteria.add(Restrictions.eq("t.pessoa_id", id));
-//		return criteria.list();
-//	}
-	
 	// OK
 	@SuppressWarnings("unchecked")
 	@Override
@@ -115,23 +102,44 @@ public class PessoaDAOImpl implements PessoaDAO {
 	@Override
 	@Transactional
 	public void atualizar(Pessoa pessoa) {
-		sessionFactory.getCurrentSession().update(pessoa);
-		
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de endereco");
+			session.getTransaction().begin();
+			sessionFactory.getCurrentSession().update(pessoa);
+			session.getTransaction().commit();
+		}
 	}
 
 	@Override
 	@Transactional
 	public Pessoa getPessoaById(int id) {
-		return (Pessoa) sessionFactory.getCurrentSession().get(Pessoa.class, id); 
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de endereco");
+			session.getTransaction().begin();
+			Pessoa p = (Pessoa) sessionFactory.getCurrentSession().get(Pessoa.class, id);
+			session.getTransaction().commit();
+			return p;
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional
 	public int getPessoaId(String cpf) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class, "aluno");
-		criteria.add(Restrictions.eq("pessoa.cpf", cpf));
-		criteria.setMaxResults(1);
-		return (int) criteria.uniqueResult();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Pessoa.class, "p");
+			criteria.add(Restrictions.eq("p.cpf", cpf));
+			criteria.setMaxResults(1);
+			Professor result =  (Professor) criteria.uniqueResult();
+			session.getTransaction().commit();
+			return result.getId();
+		}
+		return -1;
+
 	}
 
 }

@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import br.com.grupo4.projetoAcademico.model.Aluno;
 import br.com.grupo4.projetoAcademico.model.Endereco;
 import br.com.grupo4.projetoAcademico.model.Telefone;
+import br.com.grupo4.projetoAcademico.model.Titulacao;
 import br.com.grupo4.projetoAcademico.util.HibernateUtil;
 
 public class AlunoDAOImpl implements AlunoDAO{
@@ -51,21 +52,39 @@ public class AlunoDAOImpl implements AlunoDAO{
 	@Override
 	@Transactional
 	public List<Aluno> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Aluno.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Aluno.class);
+			List<Aluno> lista =  criteria.list();
+			session.getTransaction().commit();
+			return lista;
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional
 	public void remover(int id) {
 		// TODO Auto-generated method stub
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
 		sessionFactory.getCurrentSession().delete(this.getAlunoById(id));
+		session.getTransaction().commit();
+		}
 	}
 
 	@Override
 	@Transactional
 	public void atualizar(Aluno aluno) {
-		sessionFactory.getCurrentSession().update(aluno);
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			sessionFactory.getCurrentSession().update(aluno);
+			session.getTransaction().commit();
+		}
 	}
 
 	@Override

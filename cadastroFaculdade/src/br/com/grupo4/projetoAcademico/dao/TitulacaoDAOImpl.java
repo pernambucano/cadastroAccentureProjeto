@@ -47,25 +47,50 @@ public class TitulacaoDAOImpl implements TitulacaoDAO {
 	@Override
 	@Transactional
 	public List<Titulacao> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Titulacao.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Titulacao.class);
+			List<Titulacao> lista =  criteria.list();
+			session.getTransaction().commit();
+			return lista;
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional
 	public void atualizar(Titulacao titulacao) {
-		sessionFactory.getCurrentSession().update(titulacao);		
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			sessionFactory.getCurrentSession().update(titulacao);
+			session.getTransaction().commit();
+		}	
 	}
 
 	@Override
 	public void remover(int id) {
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
 		sessionFactory.getCurrentSession().delete(this.getTitulacaoById(id));
+		session.getTransaction().commit();
+		}
 		
 	}
 
 	@Override
 	public Titulacao getTitulacaoById(int id) {
-		return (Titulacao) sessionFactory.getCurrentSession().get(Titulacao.class, id); 
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			Titulacao result=  (Titulacao) sessionFactory.getCurrentSession().get(Titulacao.class, id);
+			session.getTransaction().commit();
+			return result;
+		}
+		return null;
 
 	}
 }

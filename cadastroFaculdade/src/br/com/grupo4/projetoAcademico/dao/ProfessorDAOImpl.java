@@ -38,7 +38,6 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	public void inserir(Professor professor) {
 		Session session= sessionFactory.getCurrentSession();
 		if (session.isOpen()){
-			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
 			session.getTransaction().begin();
 			session.save(professor);
 			session.getTransaction().commit();
@@ -54,10 +53,18 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	@Override
 	@Transactional
 	public List<Professor> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Professor.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Professor.class);
+			List<Professor> lista =  criteria.list();
+			session.getTransaction().commit();
+			return lista;
+		}
+		return null;
 	}
-	
+
 
 
 	// OK
@@ -78,25 +85,30 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	@Override
 	@Transactional
 	public void atualizar(Professor professor) {
-		sessionFactory.getCurrentSession().update(professor);
-	}
-
-	// OK
-	@Override
-	@Transactional
-	public int getProfessorId(String cpf) {
 		Session session= sessionFactory.getCurrentSession();
 		if (session.isOpen()){
 			session.getTransaction().begin();
-			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Professor.class, "prof");
-			criteria.add(Restrictions.eq("prof.cpf", cpf));
-			criteria.setMaxResults(1);
-			Professor result =  (Professor) criteria.uniqueResult();
+			sessionFactory.getCurrentSession().update(professor);
 			session.getTransaction().commit();
-			return result.getId();
 		}
-		return -1;
+		}
+
+		// OK
+		@Override
+		@Transactional
+		public int getProfessorId(String cpf) {
+			Session session= sessionFactory.getCurrentSession();
+			if (session.isOpen()){
+				session.getTransaction().begin();
+				Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Professor.class, "prof");
+				criteria.add(Restrictions.eq("prof.cpf", cpf));
+				criteria.setMaxResults(1);
+				Professor result =  (Professor) criteria.uniqueResult();
+				session.getTransaction().commit();
+				return result.getId();
+			}
+			return -1;
+
+		}
 
 	}
-
-}

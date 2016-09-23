@@ -50,27 +50,53 @@ public class PublicacaoDAOImpl implements PublicacaoDAO {
 	@Transactional
 	@Override
 	public List<Publicacao> listar() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Publicacao.class);
-		return criteria.list();
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			//			System.out.println("Ta chegnado em inserir de professordaoimpl");
+			session.getTransaction().begin();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Publicacao.class);
+			List<Publicacao> lista =  criteria.list();
+			session.getTransaction().commit();
+			return lista;
+		}
+		return null;
+	
 	}
 
 	@Override
 	@Transactional
 	public void atualizar(Publicacao publicacao) {
-		sessionFactory.getCurrentSession().update(publicacao);
-
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
+			sessionFactory.getCurrentSession().update(publicacao);
+			session.getTransaction().commit();
+		}
 	}
 
 	@Override
 	@Transactional
 	public void remover(int id) {
+		Session session= sessionFactory.getCurrentSession();
+		if (session.isOpen()){
+			session.getTransaction().begin();
 		sessionFactory.getCurrentSession().delete(this.getEnderecoById(id));
+		session.getTransaction().commit();
+		}
 	}
 
 	@Override
 	@Transactional
 	public Publicacao getEnderecoById(int id) {
-		return (Publicacao) sessionFactory.getCurrentSession().get(Publicacao.class, id); 
+		//duvida pessoa ou professor
+				Session session= sessionFactory.getCurrentSession();
+				if (session.isOpen()){
+					session.getTransaction().begin();
+					Publicacao result=  (Publicacao) sessionFactory.getCurrentSession().get(Publicacao.class, id);
+					session.getTransaction().commit();
+					return result;
+				}
+				return null;
 	}
 
 }
