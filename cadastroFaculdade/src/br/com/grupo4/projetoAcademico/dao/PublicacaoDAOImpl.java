@@ -80,14 +80,14 @@ public class PublicacaoDAOImpl implements PublicacaoDAO {
 		Session session= sessionFactory.getCurrentSession();
 		if (session.isOpen()){
 			session.getTransaction().begin();
-		sessionFactory.getCurrentSession().delete(this.getEnderecoById(id));
+		sessionFactory.getCurrentSession().delete(this.getPublicacaoById(id));
 		session.getTransaction().commit();
 		}
 	}
 
 	@Override
 	@Transactional
-	public Publicacao getEnderecoById(int id) {
+	public Publicacao getPublicacaoById(int id) {
 		//duvida pessoa ou professor
 				Session session= sessionFactory.getCurrentSession();
 				if (session.isOpen()){

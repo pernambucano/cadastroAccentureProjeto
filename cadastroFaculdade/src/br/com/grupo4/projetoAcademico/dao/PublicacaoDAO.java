@@ -10,5 +10,5 @@ public interface PublicacaoDAO {
 	public List<Publicacao> listar();
 	public void atualizar(Publicacao publicacao);
 	public void remover(int id);
-	public Publicacao getEnderecoById(int id);
+	public Publicacao getPublicacaoById(int id);
 }
